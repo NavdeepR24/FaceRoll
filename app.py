@@ -7,7 +7,7 @@ from pathlib import Path
 ENCODINGS_PATH = "encodings/face_encodings.pkl"
 DATASET_PATH   = "dataset"
 
-# ---------- Training ----------
+# Training
 def train_model():
     known_encodings, known_names = [], []
     dataset = Path(DATASET_PATH)
@@ -28,7 +28,7 @@ def train_model():
         pickle.dump({"encodings": known_encodings, "names": known_names}, f)
     return len(known_names)
 
-# ---------- Loading ----------
+# Loading
 def load_encodings():
     if not Path(ENCODINGS_PATH).exists():
         return [], []

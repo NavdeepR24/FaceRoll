@@ -63,7 +63,7 @@ def recognize_faces(frame, known_encodings, known_names, tolerance=0.50):
         })
     return results
 
-# ---------- Draw ----------
+# Draw
 def draw_results(frame, results):
     for r in results:
         t, ri, b, l = r["box"]

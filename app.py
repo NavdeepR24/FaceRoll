@@ -7,7 +7,7 @@ from pathlib import Path
 ENCODINGS_PATH = "encodings/face_encodings.pkl"
 DATASET_PATH   = "dataset"
 
-# Training
+# Model Training 
 def train_model():
     known_encodings, known_names = [], []
     dataset = Path(DATASET_PATH)

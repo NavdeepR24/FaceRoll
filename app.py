@@ -29,7 +29,7 @@ def train_model():
         pickle.dump({"encodings": known_encodings, "names": known_names}, f)
     return len(known_names)
 
-# Loading
+# Loading 
 def load_encodings():
     if not Path(ENCODINGS_PATH).exists():
         return [], []
@@ -64,7 +64,7 @@ def recognize_faces(frame, known_encodings, known_names, tolerance=0.50):
         })
     return results
 
-# Draw
+# Draw ...
 def draw_results(frame, results):
     for r in results:
         t, ri, b, l = r["box"]

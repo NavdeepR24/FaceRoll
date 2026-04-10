@@ -104,7 +104,9 @@ def to_excel(att, stu):
     with pd.ExcelWriter(buf, engine="openpyxl") as writer:
         att.to_excel(writer, sheet_name="Attendance", index=False)
         stu.to_excel(writer, sheet_name="Students",   index=False)
+        
         # Pivot: rows=student, cols=date
+        
         if not att.empty:
             pivot = att.pivot_table(
                 index="name", columns="date",

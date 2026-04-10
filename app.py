@@ -75,3 +75,56 @@ def draw_results(frame, results):
         cv2.putText(frame, label, (l + 4, b - 8),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.55, (255, 255, 255), 1)
     return frame
+
+
+import streamlit as st
+import pandas as pd
+from io import BytesIO
+from core.database import get_all_attendance, get_all_students
+
+st.set_page_config(page_title="Reports", layout="wide")
+st.title("📁 Download Reports")
+
+att_df = get_all_attendance()
+stu_df = get_all_students()
+
+st.subheader("🗓️ Filter by Date Range")
+col1, col2 = st.columns(2)
+start = col1.date_input("From")
+end   = col2.date_input("To")
+
+filtered = att_df[
+    (att_df["date"] >= str(start)) & (att_df["date"] <= str(end))
+]
+st.dataframe(filtered, use_container_width=True)
+
+# ---- Export to Excel (multi-sheet) ----
+def to_excel(att, stu):
+    buf = BytesIO()
+    with pd.ExcelWriter(buf, engine="openpyxl") as writer:
+        att.to_excel(writer, sheet_name="Attendance", index=False)
+        stu.to_excel(writer, sheet_name="Students",   index=False)
+        # Pivot: rows=student, cols=date
+        if not att.empty:
+            pivot = att.pivot_table(
+                index="name", columns="date",
+                values="status", aggfunc="count", fill_value=0
+            )
+            pivot.to_excel(writer, sheet_name="Pivot")
+    return buf.getvalue()
+
+excel_data = to_excel(filtered, stu_df)
+
+st.download_button(
+    label="⬇️ Download Excel Report",
+    data=excel_data,
+    file_name="attendance_report.xlsx",
+    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+)
+
+st.download_button(
+    label="⬇️ Download CSV",
+    data=filtered.to_csv(index=False),
+    file_name="attendance_report.csv",
+    mime="text/csv"
+)

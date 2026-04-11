@@ -98,7 +98,7 @@ filtered = att_df[
 ]
 st.dataframe(filtered, use_container_width=True)
 
-# ---- Export to Excel (multi-sheet) ----
+# Export to Excel (multi-sheet)
 def to_excel(att, stu):
     buf = BytesIO()
     with pd.ExcelWriter(buf, engine="openpyxl") as writer:

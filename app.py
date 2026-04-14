@@ -7,7 +7,7 @@ st.set_page_config(
     layout="wide"
 )
 
-init_db()  # ensure DB + tables exist
+init_db()
 
 st.title("🎓 Face Recognition Attendance System")
 st.markdown("---")

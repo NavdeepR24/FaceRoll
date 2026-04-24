@@ -208,3 +208,6 @@ __marimo__/
 
 # Database
 attendance.db
+
+# Dataset (face images are private)
+dataset/
